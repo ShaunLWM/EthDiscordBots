@@ -7,6 +7,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/jest": "^26.0.23",
+		"@types/node-fetch": "^2.5.11",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
 		"eslint": "7.2.0",
@@ -36,5 +37,10 @@
 			"eslint --max-warnings=0",
 			"prettier --write"
 		]
+	},
+	"dependencies": {
+		"discord.js": "^12.5.3",
+		"dotenv-safe": "^8.2.0",
+		"fetch": "^1.1.0"
 	}
 }
