@@ -6,6 +6,7 @@
 	"author": "ShaunLWM",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/fs-extra": "^9.0.12",
 		"@types/jest": "^26.0.23",
 		"@types/node-fetch": "^2.5.11",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
@@ -14,6 +15,7 @@
 		"eslint-config-prettier": "8.3.0",
 		"eslint-plugin-import": "2.22.1",
 		"eslint-plugin-prettier": "3.4.0",
+		"fs-extra": "^10.0.0",
 		"husky": "^6.0.0",
 		"jest": "^27.0.4",
 		"lint-staged": "^11.0.0",
@@ -39,6 +41,7 @@
 		]
 	},
 	"dependencies": {
+		"cheerio": "^1.0.0-rc.10",
 		"discord.js": "^12.5.3",
 		"dotenv-safe": "^8.2.0",
 		"ethers": "^5.4.2",

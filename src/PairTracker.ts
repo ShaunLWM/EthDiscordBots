@@ -2,15 +2,34 @@ import "dotenv-safe/config";
 import Discord from "discord.js";
 import { ethers } from "ethers";
 import { sleep } from "./utils/Helper";
+import { ConfigManager } from "./utils/ConfigManager";
+import { ChainType, scrapeTokens } from "./utils/TokenScraper";
+
+interface ConfigSheet {
+	tokens: Record<string, string>;
+	lastUpdated: number;
+}
 
 const CHANNELS = process.env.BOT_PAIRTRACKER_CHANNELS
 	? process.env.BOT_PAIRTRACKER_CHANNELS.split(",")
 	: ["868292871181201408"];
 
 const client = new Discord.Client();
+const localConfig = new ConfigManager("pair_tracker.json");
 
 client.once("ready", async () => {
 	console.log("[PairTracker] Ready");
+	let tokens = localConfig.get<ConfigSheet>("tokens") as Record<string, string>;
+	if ((localConfig.get<ConfigSheet>("lastUpdated") as number) + 86400 < new Date().getTime() || !tokens) {
+		tokens = await scrapeTokens(ChainType.Binance);
+		localConfig.set<ConfigSheet>("tokens", tokens);
+		localConfig.set("lastUpdated", new Date().getTime());
+	}
+
+	if (!tokens) {
+		tokens = {};
+	}
+
 	const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.binance.org");
 	const factory = new ethers.Contract(
 		"0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73",
@@ -24,10 +43,9 @@ client.once("ready", async () => {
 			const c = await client.channels.fetch(channel);
 			if (!c.isText()) continue;
 			await c.send(`
-			New pair detected
 			=================
-			token0: ${token0}
-			token1: ${token1}
+			token0: ${tokens[token0.toLowerCase()] ?? token0}
+			token1: ${tokens[token1.toLowerCase()] ?? token1}
 			pairAddress: ${pairAddress}
 		`);
 			await sleep(500);
