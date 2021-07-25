@@ -9,6 +9,7 @@
 		"@types/fs-extra": "^9.0.12",
 		"@types/jest": "^26.0.23",
 		"@types/node-fetch": "^2.5.11",
+		"@types/ws": "^7.4.7",
 		"@typescript-eslint/eslint-plugin": "^4.26.0",
 		"@typescript-eslint/parser": "^4.26.0",
 		"eslint": "7.2.0",
@@ -45,6 +46,8 @@
 		"discord.js": "^12.5.3",
 		"dotenv-safe": "^8.2.0",
 		"ethers": "^5.4.2",
-		"fetch": "^1.1.0"
+		"fetch": "^1.1.0",
+		"websocket": "^1.0.34",
+		"ws": "^7.5.3"
 	}
 }
