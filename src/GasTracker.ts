@@ -2,8 +2,6 @@ import "dotenv-safe/config";
 import Discord from "discord.js";
 import fetch from "node-fetch";
 
-import { IGasTrackerApi } from "./@types";
-
 const client = new Discord.Client();
 let timeset = +new Date();
 
