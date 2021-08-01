@@ -8,6 +8,11 @@ let timeset = +new Date();
 
 client.once("ready", async () => {
 	console.log("[EthPrice] Ready");
+	if (!process.env.CHANNEL_LOGS) throw new Error("No CHANNEL_LOGS env");
+
+	const logChannel = await client.channels.fetch(process.env.CHANNEL_LOGS as string);
+	if (!logChannel.isText()) throw new Error("Not a text channel");
+
 	const ws = new WebSocket("wss://stream.binance.com:9443/stream?streams=ethusdt@ticker");
 
 	ws.on("open", () => {
@@ -28,6 +33,18 @@ client.once("ready", async () => {
 		});
 
 		timeset = +new Date();
+	});
+
+	ws.on("ping", () => {
+		ws.pong();
+	});
+
+	ws.on("error", async (e) => {
+		await logChannel.send(JSON.stringify(e.message));
+	});
+
+	ws.on("close", async () => {
+		await logChannel.send(`Disconnected.. awaiting new connection..`);
 	});
 });
 
