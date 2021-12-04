@@ -46,7 +46,7 @@
 		"discord.js": "^12.5.3",
 		"dotenv-safe": "^8.2.0",
 		"ethers": "^5.4.4",
-		"fetch": "^1.1.0",
+		"node-fetch": "2.6.6",
 		"websocket": "^1.0.34",
 		"ws": "^7.5.3"
 	}
